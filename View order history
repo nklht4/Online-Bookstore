@@ -1,0 +1,67 @@
+import java.util.Scanner;  
+
+public class Main {  
+    public static void main(String[] args) {  
+        Scanner scanner = new Scanner(System.in);  
+        BookStore bookStore = new BookStore();  
+        ShoppingCart cart = new ShoppingCart();  
+        OrderManager orderManager = new OrderManager();  
+
+        // 添加书籍  
+        bookStore.addBook(new Book("Java Programming", "John Doe", 29.99, 10));  
+        bookStore.addBook(new Book("Python Programming", "Jane Smith", 39.99, 5));  
+
+        while (true) {  
+            System.out.println("\n欢迎来到在线书店管理系统");  
+            System.out.println("1. 显示库存");  
+            System.out.println("2. 添加书籍到购物车");  
+            System.out.println("3. 查看购物车");  
+            System.out.println("4. 结账");  
+            System.out.println("5. 查看订单历史");  
+            System.out.println("6. 退出");  
+            System.out.print("请选择一个操作: ");  
+
+            int choice = scanner.nextInt();  
+            scanner.nextLine(); // Consume newline  
+
+            switch (choice) {  
+                case 1:  
+                    bookStore.displayInventory();  
+                    break;  
+                case 2:  
+                    System.out.print("请输入书名: ");  
+                    String titleToAdd = scanner.nextLine();  
+                    System.out.print("请输入数量: ");  
+                    int quantityToAdd = scanner.nextInt();  
+                    Book book = bookStore.getBook(titleToAdd);  
+                    if (book != null) {  
+                        cart.addBook(book, quantityToAdd);  
+                    } else {  
+                        System.out.println("书籍未找到: " + titleToAdd);  
+                    }  
+                    break;  
+                case 3:  
+                    System.out.println("购物车内容:");  
+                    for (CartItem item : cart.getItems()) {  
+                        System.out.println("- " + item.getBook().getTitle() + " (" + item.getQuantity() + ") - $" + item.getTotalPrice());  
+                    }  
+                    break;  
+                case 4:  
+                    Order order = new Order(cart.getItems());  
+                    orderManager.addOrder(order);  
+                    cart.clear(); // 清空购物车  
+                    System.out.println("结账完成.");  
+                    break;  
+                case 5:  
+                    orderManager.displayOrders();  
+                    break;  
+                case 6:  
+                    System.out.println("谢谢使用!");  
+                    scanner.close();  
+                    return;  
+                default:  
+                    System.out.println("无效的操作. 请重试.");  
+            }  
+        }  
+    }  
+}
