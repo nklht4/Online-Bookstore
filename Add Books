@@ -1,0 +1,41 @@
+public class Book {  
+    private String title;  
+    private String author;  
+    private int stock;  
+
+    public Book(String title, String author, int stock) {  
+        this.title = title;  
+        this.author = author;  
+        this.stock = stock;  
+    }  
+
+    public String getTitle() {  
+        return title;  
+    }  
+
+    public String getAuthor() {  
+        return author;  
+    }  
+
+    public int getStock() {  
+        return stock;  
+    }  
+
+    public void addStock(int quantity) {  
+        if (quantity > 0) {  
+            stock += quantity;  
+            System.out.println(quantity + " copies added. New stock for " + title + ": " + stock);  
+        } else {  
+            System.out.println("Invalid quantity. Cannot add stock.");  
+        }  
+    }  
+
+    public void removeStock(int quantity) {  
+        if (quantity > 0 && quantity <= stock) {  
+            stock -= quantity;  
+            System.out.println(quantity + " copies sold. Remaining stock for " + title + ": " + stock);  
+        } else {  
+            System.out.println("Invalid quantity. Cannot remove stock.");  
+        }  
+    }  
+}
